@@ -13,7 +13,6 @@ var rtn = {};
                     code: 1001,
                     message: 'failed to retrieve quiz information'
                 }
-                //console.log("/vote/" + uid + "/" + dir + " - ", result);
             }
             rtn.ready = true;
             res.json(rtn);
@@ -51,19 +50,44 @@ var rtn = {};
         }
         database.query('SELECT q.`quizid`, n.`label`, n.`qid`, n.`type` FROM `quiz` as q JOIN `question` as n WHERE n.`quizid` = q.`quizid`;', showquizzes);
 
+};
 
+module.exports.addquestionDB = function(req,res){
+  var rtn = {};
+          function addquestionDB(err, result, fields) {
+              rtn.db_result = result;
+              if (err)
+                  rtn.error = err;
+                  if (result.changedRows < 1) {
+                      rtn.error = {
+                          code: 1001,
+                          message: 'failed to add question'
+                      }
+                  }
+              rtn.ready = true;
+              res.json(rtn);
+          }
+          database.query('INSERT INTO `question`(`quizid`, `type`, `label`) VALUES (?,?,?);', [req.body.quizid || "null", req.body.type || "null", req.body.label], addquestionDB);
 
 };
 
 //Shopping Cart
-module.exports.viewshoppingcart = function(req,res){
+module.exports.additem = function(req,res){
   var rtn = {};
           function addfact(err, result, fields) {
               rtn.db_result = result;
+              if (err)
+                  rtn.error = err;
+                  if (result.changedRows < 1) {
+                      rtn.error = {
+                          code: 1001,
+                          message: 'failed to add item'
+                      }
+                  }
               rtn.ready = true;
               res.json(rtn);
           }
-          database.query('INSERT INTO `item`(`name`, `icon`, `icon_height`, `monthly_cost`, `eStar`, `object`, `type`) VALUES (?,?,?,?,?,?,?,?);', [req.body.name || "null", req.body.icon || "null", req.body.icon_height || "null", req.body.monthly_cost || "null", req.body.eStar || "null", req.body.object || "null", req.body.type || "null"], viewshoppingcart);
+          database.query('INSERT INTO `item`(`name`, `icon`, `icon_height`, `monthly_cost`, `eStar`, `object`, `type`) VALUES (?,?,?,?,?,?,?,?);', [req.body.name || "null", req.body.icon || "null", req.body.icon_height || "null", req.body.monthly_cost || "null", req.body.eStar || "null", req.body.object || "null", req.body.type || "null"], additem);
 
 };
 
@@ -96,21 +120,22 @@ module.exports.getinformation = function(req,res){
 
 module.exports.addinformation = function(req,res){
   var rtn = {};
-          function addfact(err, result, fields) {
+          function addinformation(err, result, fields) {
               rtn.db_result = result;
-              if (err)
+              if (err){
                   rtn.error = err;
+                  console.log(err);
+                }
                   if (result.changedRows < 1) {
                       rtn.error = {
                           code: 1001,
                           message: 'failed to add information'
                       }
-                      //console.log("/vote/" + uid + "/" + dir + " - ", result);
                   }
               rtn.ready = true;
               res.json(rtn);
           }
-          database.query('INSERT INTO `fact`(`name`, `text`, `category`, `hyperlink`, `image`) VALUES (?,?,?,?,?);', [req.body.name || "null", req.body.text || "null", req.body.category || "null", req.body.hyperlink || "null", req.body.image || "null"], addinformation);
+          database.query('INSERT INTO `information`(`title`, `hyperlink`) VALUES (?,?);', [req.body.title || "null", req.body.info_link || "null"], addinformation);
 
 };
 
@@ -137,9 +162,8 @@ module.exports.addfact = function(req,res){
                   if (result.changedRows < 1) {
                       rtn.error = {
                           code: 1001,
-                          message: 'failed to add fact information'
+                          message: 'failed to add fact'
                       }
-                      //console.log("/vote/" + uid + "/" + dir + " - ", result);
                   }
               rtn.ready = true;
               res.json(rtn);

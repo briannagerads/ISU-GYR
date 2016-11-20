@@ -6,7 +6,7 @@
 	<meta charset="utf-8">
 <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
 <meta content="width=device-width,initial-scale=1" name="viewport">
-	<title>DEC1612</title>
+	<title>Green Living Quiz Results</title>
 	<link rel="icon" type="image/x-icon" href="favicon.ico?v=1.4.44">
 <link href="css/baseV4.css" rel="stylesheet">
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.css" media="all" rel="stylesheet">
@@ -169,22 +169,50 @@ h3 code{
 
 										<div id="page-wrap">
 
-											<h1>How Green Are You?</h1>
+											<h1 class="page-title">How Green Are You?</h1>
 
 									        <?php
+												$questionCounter = 0;
+
 									            $answer1 = $_POST['question-1-answers'];
+												$questionCounter++;
+
 									            $answer2 = $_POST['question-2-answers'];
+												$questionCounter++;
+
 									            $answer3 = $_POST['question-3-answers'];
+												$questionCounter++;
+
 									            $answer4 = $_POST['question-4-answers'];
+												$questionCounter++;
+
 									            $answer5 = $_POST['question-5-answers'];
+												$questionCounter++;
+
 									            $totalCorrect = 0;
-									            if ($answer1 == "A") { $totalCorrect++; }
-									            if ($answer2 == "A" || $answer2 == "B" || $answer2 == "C" || $answer2 == "D" ||$answer2 == "E" ) { $totalCorrect++; }
-									            if ($answer3 == "C") { $totalCorrect++; }
-									            if ($answer4 == "B") { $totalCorrect++; }
-									            if ($answer5) { $totalCorrect++; }
-									            echo "<div id='results'>Your Green Score: $totalCorrect</div>";
-									        ?>
+									            if ($answer1 == "A") { $totalCorrect++; };
+									            if ($answer2 == "A" || $answer2 == "B" || $answer2 == "C" || $answer2 == "D" ||$answer2 == "E" ) { $totalCorrect++; };
+									            if ($answer3 == "C") { $totalCorrect++; };
+									            if ($answer4 == "B") { $totalCorrect++; };
+									            if ($answer5 == "B") { $totalCorrect++; };
+											?>
+
+											<?php if(($totalCorrect / $questionCounter) >= .75) : ?>
+													<img class="result-image" src="img/QuizResults/Expert.PNG">
+													<h3 class="result-state">You are a Green Living expert!</h3>
+											<?php elseif(($totalCorrect / $questionCounter) >= .50) : ?>
+													<img class="result-image" src="img/QuizResults/Intermediate.PNG">
+													<h3 class="result-state">You are competent with Green Living!</h3>
+											<?php else : ?>
+													<img class="result-image" src="img/QuizResults/Beginner.PNG">
+													<h3 class="result-state">You are still a beginner in Green Living!</h3>
+											<?php endif; ?>
+									        
+											<div class="score"  
+												<?php echo '<div id="results">Your Green Score: '; ?>  
+												<?php echo $totalCorrect; ?> Points
+											</div>
+									        
 
 										</div>
 
@@ -195,30 +223,43 @@ h3 code{
 
 
 		<div class="wd-l-Footer">
-			<div class="wd-l-Footer-inner fwrapper">
-				<div class="wd-l-PageFooter isu-footer" id="footer" role="contentinfo">
-					<div class="wd-l-PageFooter-inner">
-						<div class="wd-Grid wd-Grid--fitToFill wd-Grid--noGutter">
-							<div class="wd-Grid-cell wd-Grid-cell--1">
-								<div class="wd-l-PageFooter-nameplate">
-									<a class="wd-Nameplate nameplate" href="http://www.iastate.edu/">
-										<img alt="Iowa State University" src="img/sprite.png?v=1.4.44"/>
-									</a>
-								</div>
-							</div>
+            <div class="wd-l-Footer-inner">
 
-							<!-- Team contact info -->
-							<div class="wd-Grid-cell wd-Grid-cell--2">
-								<!--<div class="wd-l-PageFooter-content">
-									<p>DEC1612,  <script>document.write('<a href="mailto:'+ ["teamEmail", "iastate.edu"].join('@') +'">'+ ["dec1612", "iastate.edu"].join('@') +'</a>')</script><noscript>dec1612 (at) iastate (dot) edu</noscript>.</p>
-									<p>Copyright &copy; 1995-2016, Iowa State University of Science and Technology. All rights reserved.</p>
-								</div>-->
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+                <div class="GLimage">
+                    <img src="img/footer.jpg" />
+                </div>
+
+                <div class="wd-l-PageFooter" id="footer" role="contentinfo">
+                    <div class="wd-l-PageFooter-inner">
+                        <div class="wd-Grid wd-Grid--fitToFill wd-Grid--noGutter">
+
+                            <div class="wd-Grid-cell wd-Grid-cell--1">
+                                <div class="wd-l-PageFooter-nameplate">
+                                    <a class="wd-Nameplate" href="http://www.iastate.edu/">
+                                        <img alt="Iowa State University" src="img/sprite.png">
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="wd-Grid-cell wd-Grid-cell--2">
+                                <div class="wd-l-PageFooter-content">
+                                    <div class="region region-footer">
+                                        <div id="block-block-1" class="block block-block">
+
+
+                                            <div class="content">
+                                                <p>Copyright © 1995-2016, Iowa State University of Science and Technology. All rights reserved.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 		<div id="loading" style="display:none">Loading...</div>
 	</div>
 </div>
